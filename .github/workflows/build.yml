@@ -27,7 +27,7 @@ jobs:
         uses: action/cache@v2
         with:
           path: .buildozer_global
-          key: buildozer-global-${{ hashFiles('test_app/buildozer.spec') }
+          key: buildozer-global-${{ hashFiles('test_app/buildozer.spec') }}
 
       - name: Build with Buildozer
         uses: ArtemSBulgakov/buildozer-action@v1
