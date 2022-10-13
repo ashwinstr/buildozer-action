@@ -1,11 +1,11 @@
 [app]
 
-title = TestApp
+title = MyCalc
 package.name = testapp
 package.domain = org.test
 
 source.dir = .
-source.include_exts = py,png,jpg,kv,atlas
+source.include_exts = py,png,jpg,kv,atlas,ttf
 
 version = 0.2
 requirements = python3,kivy
