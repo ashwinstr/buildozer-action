@@ -1,6 +1,6 @@
 [app]
 
-title = Test App
+title = TestApp
 package.name = testapp
 package.domain = org.test
 
