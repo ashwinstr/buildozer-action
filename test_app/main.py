@@ -25,10 +25,10 @@ class MainWidget(BoxLayout):
         self.first_number = self.total = widget.text
         widget.text = "0"
 
-class MyCalcApp(App):
+class MainApp(App):
     
     def build(self):
         return MainWidget()
 
 if __name__ == "__main__":
-    MyCalcApp().run()
+    MainApp().run()
