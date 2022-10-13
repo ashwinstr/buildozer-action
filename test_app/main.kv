@@ -22,14 +22,37 @@ MainWidget:
         input_filter: 'int'
         size_hint: 1, 1/2
         text: ""
+        font_size: 20
         multiline: False
-        on_text_validate: root.enter
+        on_text_validate: root.add_number(input)
     BoxLayout:
+        BoxLayout:
+            BoxLayout:
+                orientation: 'vertical'
+                Button:
+                    text: "*"
+                    color: 1, 1, 1, 1
+                    font_size: 25
+                    on_press: root.mult_number(input)
+                Button:
+                    text: "/"
+                    color: 1, 1, 1, 1
+                    font_size: 25
+                    on_press: root.div_number(input)
+            BoxLayout:
+                orientation: 'vertical'
+                Button:
+                    text: "+"
+                    color: 1, 1, 1, 1
+                    font_size: 25
+                    on_press: root.add_number(input)
+                Button:
+                    text: "-"
+                    color: 1, 1, 1, 1
+                    font_size: 25
+                    on_press: root.sub_number(input)
         Button:
-            text: "+"
+            text: "AC"
+            font_size: 25
             color: 1, 1, 1, 1
-            on_press: root.add_number(input)
-        Button:
-            text: "Enter"
-            color: 1, 1, 1, 1
-            on_press: root.enter(input)
+            on_press: root.clear()
