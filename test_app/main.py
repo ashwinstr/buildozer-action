@@ -5,8 +5,6 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import StringProperty, NumericProperty
 from kivy.lang import Builder
 
-Builder.load_file("main.kv")
-
 class MainWidget(BoxLayout):
     
     first_number = StringProperty("0")
