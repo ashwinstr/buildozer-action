@@ -24,7 +24,7 @@ jobs:
           path: master
           
       - name: Cache Buildozer global directory
-        uses: action/cache@v2
+        uses: actions/cache@v2
         with:
           path: .buildozer_global
           key: buildozer-global-${{ hashFiles('test_app/buildozer.spec') }}
