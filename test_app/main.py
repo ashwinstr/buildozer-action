@@ -6,23 +6,24 @@ from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.image import Image
-from kivy.config import Config
 from kivy.utils import platform
 from kivy.properties import StringProperty
 from kivy.metrics import dp
 from kivy.clock import Clock
 from kivy.core.window import Window
+from kivy.config import Config
 
+if platform != "android":
+    Config.set('graphics', 'width', '1080')
+    Config.set('graphics', 'height', '2340')
+Config.set('graphics', 'resizable', True)
+
+SPACING = 10
+PADDING = 20
 PEWTER_BLUE = (144/255, 175/255, 197/255, 1)
 TEAL_BLUE = (51/255, 107/255, 135/255, 1)
 BLUE = (81/255, 102/255, 130/255, 1)
 SHADOW = (42/255, 49/255, 50/255, 1)
-
-if platform != "android":
-    Config.set('graphics', 'width', '270')
-    Config.set('graphics', 'height', '575')
-Config.set('graphics', 'resizable', True)
-
 
 BG_NORMAL = "resources/Light rectangle.png"
 BG_DOWN = "resources/Dark rectangle.png"
@@ -42,10 +43,11 @@ class RoundedButton(Button):
 
     def on_size(self, *args):
         if self.text == " ":
-            self.img.source="resources/backspace.png"
+            self.img.source = "resources/backspace.png"
+            self.img.center = self.center
             self.img.color = [1, 1, 1, 1]
-            self.img.pos = self.x + self.width/4, self.y + self.height/4
-            self.img.size = self.width/2, self.height/2
+            self.img.pos = self.pos
+            self.img.size = self.size
         self.rect.pos = self.pos
         self.rect.size = self.size
         self.font_size = dp(min(self.width, self.height)/2)
@@ -61,8 +63,8 @@ class NumButtons(GridLayout):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.padding = 5
-        self.spacing = 5
+        self.padding = PADDING
+        self.spacing = SPACING
         self.cols = 3
         self.rows = 4
         self.size_hint = 1, 0.75
@@ -73,21 +75,19 @@ class NumButtons(GridLayout):
         for one in ["+/-", "0", "C"]:
             btn_ = RoundedButton()
             btn_.text = one
-            btn_.font_size = dp(30)
             self.add_widget(btn_)
 
 class MathButtons(GridLayout):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.spacing = 5
+        self.spacing = SPACING
         self.cols = 2
         self.rows = 4
         self.size_hint = 1, 2/3
         for sign in ["+", "-", "*", "/", "(", ")", " ", "="]:
             btn_ = RoundedButton()
             btn_.text = sign
-            btn_.font_size = dp(30)
             self.add_widget(btn_)
 
 
@@ -97,19 +97,18 @@ class ComputeBox(BoxLayout):
         super().__init__(**kwargs)
         with self.canvas.before:
             self.colors = Color(rgba=SHADOW)
-            self.rect = RoundedRectangle(radius=[25, 25, 0, 0])
+            self.rect = RoundedRectangle(radius=[50, 50, 0, 0])
         Clock.schedule_once(self.on_size)
 
     def on_size(self, *args):
         self.rect.pos = self.pos
-        self.rect.size = self.width, self.height + 20
+        self.rect.size = self.width, self.height + 50
 
 
 class MainWidget(BoxLayout):
     
     total = StringProperty("0")
     equation = StringProperty("0")
-    last_is_num = True
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -138,11 +137,12 @@ class MainWidget(BoxLayout):
                 self.equation = str(num)
             else:
                 self.equation += str(num)
-            self.last_is_num = True
 
     def math_pressed(self, sign):
+        last_ = self.equation[-1]
+        print(self.equation[-3:])
         if sign in ["+", "-", "*", "/"]:
-            if self.last_is_num:
+            if last_.isdigit():
                 self.equation += f" {sign} "
                 self.last_is_num = False
             else:
@@ -150,21 +150,20 @@ class MainWidget(BoxLayout):
         elif sign == " ":
             if len(self.equation) == 1:
                 self.equation = "0"
-            elif len(self.equation) >= 2 and self.equation[-1].isdigit():
+            elif len(self.equation) >= 2 and last_.isdigit():
                 self.equation = self.equation[:-1]
             else:
                 self.equation = self.equation[:-3]
         elif sign == "(":
-            if not self.equation[-1].isdigit():
+            if not last_.isdigit():
                 self.equation += " ( "
         elif sign == ")":
-            if self.equation[-1].isdigit():
+            if last_.isdigit() or self.equation[-3:] == " ) ":
                 self.equation += " ) "
         elif sign == "=":
             try:
                 self.total = str(eval(self.equation))
-            except Exception as e:
-                print(e)
+            except:
                 self.total = "ERROR !!!"
 
 class MainApp(App):
