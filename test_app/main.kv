@@ -1,79 +1,33 @@
 MainWidget:
 
 #:set btn_font_h 30
-#:set btn_corner 30
-#:set dark_back "resources/Dark rectangle.png"
-#:set light_back "resources/Light rectangle.png"
 
 <MainWidget>:
     orientation: 'vertical'
-    Widget:
-        id: wid
-        canvas.before:
-            Color:
-                rgba: 200/255, 150/255, 150/255, 1
-            Rectangle:
-                pos: root.pos
-                size: root.size
-        Label:
-            pos: wid.pos
-            size: wid.width, wid.height
-            color: 0, 0, 0, 1
-            text: root.total
-            font_name: "resources/digital-7.ttf"
-            font_size: 80
+    Label:
+        color: 0, 0, 0, 1
+        text: root.total
+        font_name: "resources/digital-7.ttf"
+        font_size: "80dp"
+        size_hint: 1, 1/3
     Label:
         id: input
         text: root.equation
         color: 0, 0, 0, 0.75
-        font_size: 30
-        size_hint: 1, 0.25
-    BoxLayout:
+        font_size: "30dp"
+        size_hint: 1, 1/3
+    ComputeBox:
+        size_hint: 1, 1/2
         BoxLayout:
             orientation: 'vertical'
-            GridLayout:
-                cols: 3
-                rows: 3
-                call: root.numeric_buttons(self)
-                size_hint: 1, 0.75
-            BoxLayout:
-                size_hint: 1, 0.25
-                Button:
-                    text: "+/-"
-                    font_size: btn_font_h
-                    color: 1, 1, 1, 1
-                    background_normal: light_back
-                    background_down: dark_back
-                    border: (0, 0, 0, 0)
-                    on_press: root.plus_minus()
-                Button:
-                    text: "0"
-                    font_size: btn_font_h
-                    background_normal: light_back
-                    background_down: dark_back
-                    border: (0, 0, 0, 0)
-                    on_press: root.amend_zero()
-                Button:
-                    text: "AC"
-                    font_size: btn_font_h
-                    background_normal: light_back
-                    background_down: dark_back
-                    border: (0, 0, 0, 0)
-                    on_press: root.clear_equation()
+            size_hint: 3/5, 1
+            NumButtons:
+                id: num_buttons
+                text: self.text
         BoxLayout:
             orientation: 'vertical'
-            GridLayout:
-                id: arigthmatic_buttons
-                cols: 2
-                rows: 2
-                call: root.math_buttons(self)
-                size_hint: 1, 2/3
-            Button:
-                id: solve
-                text: "="
-                font_size: btn_font_h
-                size_hint: 1, 1/3
-                background_normal: light_back
-                background_down: dark_back
-                border: (0, 0, 0, 0)
-                on_press: root.equal()
+            size_hint: 2/5, 1
+            padding: 5
+            spacing: 5
+            MathButtons:
+                id: math_buttons
