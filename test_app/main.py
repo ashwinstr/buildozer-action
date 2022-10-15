@@ -8,14 +8,11 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.image import Image
 from kivy.utils import platform
 from kivy.properties import StringProperty
-from kivy.metrics import dp
+from kivy.metrics import dp, sp
 from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.config import Config
 
-if platform != "android":
-    Config.set('graphics', 'width', '1080')
-    Config.set('graphics', 'height', '2340')
 Config.set('graphics', 'resizable', True)
 
 SPACING = 10
@@ -36,7 +33,7 @@ class RoundedButton(Button):
         self.background_normal = ''
         with self.canvas.before:
             self.button_color = Color(rgba=TEAL_BLUE)
-            self.rect = RoundedRectangle(radius=[20])
+            self.rect = RoundedRectangle(radius=[dp(20)])
         img = self.img = Image(color=[0, 0, 0, 0])
         self.add_widget(img)
         Clock.schedule_once(self.on_size)
@@ -50,7 +47,7 @@ class RoundedButton(Button):
             self.img.size = self.size
         self.rect.pos = self.pos
         self.rect.size = self.size
-        self.font_size = dp(min(self.width, self.height)/2)
+        self.font_size = sp(min(self.width, self.height)/2)
     
     def on_press(self):
         self.button_color.rgba = [75/255, 75/255, 75/255, 1]
@@ -63,8 +60,8 @@ class NumButtons(GridLayout):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.padding = PADDING
-        self.spacing = SPACING
+        self.padding = dp(PADDING)
+        self.spacing = dp(SPACING)
         self.cols = 3
         self.rows = 4
         self.size_hint = 1, 0.75
@@ -81,7 +78,7 @@ class MathButtons(GridLayout):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.spacing = SPACING
+        self.spacing = dp(SPACING)
         self.cols = 2
         self.rows = 4
         self.size_hint = 1, 2/3
@@ -97,12 +94,12 @@ class ComputeBox(BoxLayout):
         super().__init__(**kwargs)
         with self.canvas.before:
             self.colors = Color(rgba=SHADOW)
-            self.rect = RoundedRectangle(radius=[50, 50, 0, 0])
+            self.rect = RoundedRectangle(radius=[dp(50), dp(50), 0, 0])
         Clock.schedule_once(self.on_size)
 
     def on_size(self, *args):
         self.rect.pos = self.pos
-        self.rect.size = self.width, self.height + 50
+        self.rect.size = self.width, self.height + dp(50)
 
 
 class MainWidget(BoxLayout):
@@ -170,6 +167,8 @@ class MainApp(App):
     
     def build(self):
         Window.clearcolor = PEWTER_BLUE
+        if platform != 'android':
+            Window.size = 1080, 2340
         return MainWidget()
 
 if __name__ == "__main__":
