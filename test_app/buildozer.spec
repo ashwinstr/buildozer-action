@@ -1,13 +1,13 @@
 [app]
 
 title = MyCalc
-package.name = testapp
+package.name = calc
 package.domain = org.test
 
 source.dir = .
 source.include_exts = py,png,jpg,kv,atlas,ttf
 
-version = 0.2
+version = 0.3
 requirements = python3,kivy
 
 orientation = portrait
