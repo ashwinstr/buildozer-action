@@ -16,7 +16,7 @@ from kivy.config import Config
 Config.set('graphics', 'resizable', True)
 
 SPACING = 10
-PADDING = 20
+PADDING = 10
 PEWTER_BLUE = (144/255, 175/255, 197/255, 1)
 TEAL_BLUE = (51/255, 107/255, 135/255, 1)
 BLUE = (81/255, 102/255, 130/255, 1)
@@ -47,7 +47,7 @@ class RoundedButton(Button):
             self.img.size = self.size
         self.rect.pos = self.pos
         self.rect.size = self.size
-        self.font_size = sp(min(self.width, self.height)/2)
+        self.font_size = min(sp(min(self.width, self.height)/3), sp(80))
     
     def on_press(self):
         self.button_color.rgba = [75/255, 75/255, 75/255, 1]
@@ -168,7 +168,7 @@ class MainApp(App):
     def build(self):
         Window.clearcolor = PEWTER_BLUE
         if platform != 'android':
-            Window.size = 1080, 2340
+            Window.size = sp(1080), sp(2340)
         return MainWidget()
 
 if __name__ == "__main__":
