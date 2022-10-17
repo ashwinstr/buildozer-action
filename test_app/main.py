@@ -185,7 +185,7 @@ class ComputeBox(BoxLayout):
 
     def on_size(self, *args):
         self.rect.pos = self.pos
-        self.rect.size = self.width, self.height + dp(self.height/8)
+        self.rect.size = self.width, self.height + dp(50)
 
 class FloatingButtons(FloatLayout):
 
