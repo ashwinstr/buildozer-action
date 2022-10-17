@@ -14,6 +14,8 @@ on:
 #      - data
 #      - gh-pages
   workflow_dispatch:
+  
+  workflow_call:
 
 jobs:
   # Build job. Builds app for Android with Buildozer
