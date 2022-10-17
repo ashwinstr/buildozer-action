@@ -27,3 +27,6 @@ jobs:
            git add --all
            git commit -m "Version increment..."
            git push -q https://${{ secrets.GH_TOKEN }}@github.com/${GITHUB_REPOSITORY}
+    
+  building-now:
+    uses: ./.github/workflows/build.yml
