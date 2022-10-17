@@ -6,6 +6,10 @@ on:
     paths:
       - "test_app/buildozer.spec"
 
+env:
+  GitHubMail: "ashwinstr@gmail.com"
+  GitHubName: "ashwinstr"
+
 jobs:
   # Build job. Builds app for Android with Buildozer
   build-android:
@@ -13,6 +17,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Clone private repo
+        run: |
+          git config --global user.email ${GitHubMail}
+          git config --global user.name ${GitHubName}
+          git config --global credential.helper store
+          echo "https://${GitHubName}:${{ secrets.GH_TOKEN }}@github.com" > ~/.git-credentials
+          git clone https://${{ secrets.GH_TOKEN }}@github.com/my-kivy-apps temp_repo
+          cd temp_repo || exit 1
+           
       - name: Checkout
         uses: actions/checkout@v2
         with:
@@ -22,14 +35,14 @@ jobs:
         uses: actions/cache@v2
         with:
           path: .buildozer_global
-          key: buildozer-global-${{ hashFiles('test_app/buildozer.spec') }}
+          key: buildozer-global-${{ hashFiles('buildozer.spec') }}
 
       - name: Build with Buildozer
         uses: ArtemSBulgakov/buildozer-action@v1
         id: buildozer
         with:
           repository_root: master
-          workdir: test_app
+          workdir: .
           buildozer_version: stable
 
       - name: Upload artifacts
@@ -41,8 +54,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          path: data
-          ref: data # Branch name
+          path: https://${{ secrets.GH_TOKEN }}@github.com/my-kivy-apps
+          ref: main # Branch name
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -52,4 +65,6 @@ jobs:
 
       - name: Push binary to data branch
         if: github.event_name == 'push'
-        run: python master/.ci/move_binary.py "${{ steps.buildozer.outputs.filename }}" master data bin
+        run: git add --all
+            git commit -m "Version increment..."
+            git push -q https://${{ secrets.GH_TOKEN }}@github.com/my-kivy-apps
