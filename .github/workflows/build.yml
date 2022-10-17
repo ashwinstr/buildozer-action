@@ -42,7 +42,7 @@ jobs:
         id: buildozer
         with:
           repository_root: master
-          workdir: .
+          workdir: temp_path
           buildozer_version: stable
 
       - name: Upload artifacts
