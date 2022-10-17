@@ -31,7 +31,6 @@ GREEN_RAIN = (44/255, 120/255, 115/255, 1)
 LIGHT_PINK = (255/255, 168/255, 168/255, 1)
 DARK_PINK = (185/255, 74/255, 74/255, 1)
 
-
 SHADOW = (42/255, 49/255, 50/255, 1)
 
 current_color_scheme = "blue"
@@ -47,17 +46,16 @@ class RoundedButton(Button):
         with self.canvas.before:
             self.button_color = Color(rgba=TEAL_BLUE)
             self.rect = RoundedRectangle(radius=[dp(20)])
-        img = self.img = Image(color=[0, 0, 0, 0])
+        img = self.img = Image(source="resources/backspace.png", color=[0, 0, 0, 0])
         self.add_widget(img)
         Clock.schedule_once(self.on_size)
 
     def on_size(self, *args):
         if self.text == " ":
-            self.img.source = "resources/backspace.png"
             self.img.color = [1, 1, 1, 1]
-            self.img.size = sp(self.width), sp(self.height)
             self.img.center = self.center
             self.img.pos = self.pos
+            self.img.size = sp(self.width), sp(self.height)
         elif self.color_id == "green_color":
             self.pos = self.parent.pos
             self.size = self.parent.size
@@ -185,7 +183,7 @@ class ComputeBox(BoxLayout):
 
     def on_size(self, *args):
         self.rect.pos = self.pos
-        self.rect.size = self.width, self.height + dp(50)
+        self.rect.size = self.width, self.height + sp(50)
 
 class FloatingButtons(FloatLayout):
 
