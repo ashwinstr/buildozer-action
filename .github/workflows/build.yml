@@ -42,7 +42,7 @@ jobs:
         id: buildozer
         with:
           repository_root: master
-          workdir: temp_repo
+          workdir: my-kivy-apps
           buildozer_version: stable
 
       - name: Upload artifacts
