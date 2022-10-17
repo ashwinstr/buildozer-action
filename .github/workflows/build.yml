@@ -1,18 +1,19 @@
 name: Build
 on:
-  push:
-    branches-ignore:
-      - data
-      - gh-pages
-    paths-ignore:
-      - "test_app/buildozer.spec"
-    tags:
-      - '**'
-  
-  pull_request:
-    branches-ignore:
-      - data
-      - gh-pages
+#  push:
+#    branches-ignore:
+#      - data
+#      - gh-pages
+#    paths-ignore:
+#      - "test_app/buildozer.spec"
+#    tags:
+#      - '**'
+#  
+#  pull_request:
+#    branches-ignore:
+#      - data
+#      - gh-pages
+  workflow_dispatch:
 
 jobs:
   # Build job. Builds app for Android with Buildozer
