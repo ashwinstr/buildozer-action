@@ -54,7 +54,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          path: https://${{ secrets.GH_TOKEN }}@github.com/ashwinstr/my-kivy-apps
+          path: https://ashwinstr@github.com/ashwinstr/my-kivy-apps
           ref: main # Branch name
 
       - name: Set up Python
