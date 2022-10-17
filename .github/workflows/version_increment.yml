@@ -1,0 +1,29 @@
+name: Increment in app version
+
+on:
+  push:
+    branches: [ master ]
+    paths-ignore:
+      - "test_apps/buildozer.spec"
+  workflow_dispatch:
+env:
+  GitHubMail: "ashwinstr@gmail.com"
+  GitHubName: "ashwinstr"
+  
+jobs:
+  run:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Version Increament.
+      run: |
+           git config --global user.email ${GitHubMail}
+           git config --global user.name ${GitHubName}
+           git config --global credential.helper store
+           echo "https://${GitHubName}:${{ secrets.GH_TOKEN }}@github.com" > ~/.git-credentials
+           git clone https://${{ secrets.GH_TOKEN }}@github.com/${GITHUB_REPOSITORY} temp_repo
+           cd temp_repo || exit 1
+           python3 script/increment.py  # execute the script to increment version.
+           git add --all
+           git commit -m "Version increment..."
+           git push -q https://${{ secrets.GH_TOKEN }}@github.com/${GITHUB_REPOSITORY}
