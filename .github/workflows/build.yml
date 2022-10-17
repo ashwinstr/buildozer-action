@@ -2,7 +2,9 @@ name: Build
 on:
   workflow_dispatch:
   
-  workflow_call:
+  push:
+    paths:
+      - "test_app/buildozer.spec"
 
 jobs:
   # Build job. Builds app for Android with Buildozer
