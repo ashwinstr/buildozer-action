@@ -23,7 +23,7 @@ jobs:
           git config --global user.name ${GitHubName}
           git config --global credential.helper store
           echo "https://${GitHubName}:${{ secrets.GH_TOKEN }}@github.com" > ~/.git-credentials
-          git clone https://${{ secrets.GH_TOKEN }}@github.com/ashiwnstr/my-kivy-apps temp_repo
+          git clone https://ashwinstr@github.com/ashwinstr/my-kivy-apps temp_repo
           cd temp_repo || exit 1
            
       - name: Checkout
