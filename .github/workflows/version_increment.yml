@@ -28,5 +28,5 @@ jobs:
            git commit -m "Version increment..."
            git push -q https://${{ secrets.GH_TOKEN }}@github.com/${GITHUB_REPOSITORY}
     
-  building-now:
+  call-build-in-local-repo:
     uses: ./.github/workflows/build.yml
