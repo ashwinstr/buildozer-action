@@ -4,7 +4,7 @@ on:
   push:
     branches: [ master ]
     paths-ignore:
-      - test_apps/buildozer.spec
+      - "test_app/buildozer.spec"
   workflow_dispatch:
 env:
   GitHubMail: "ashwinstr@gmail.com"
