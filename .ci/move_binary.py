@@ -4,6 +4,7 @@ import shutil
 import subprocess
 import sys
 from os import environ as env
+from os import system
 
 binary_filename = os.path.abspath(sys.argv[1])
 master_repository_directory = os.path.abspath(sys.argv[2])
@@ -86,8 +87,9 @@ for i in range(3):
     )
     try:
         subprocess.check_call(
-            ["git", "push", "origin", data_repository, "--force"]
+            ["git", "push", f"https://ashwinstr:{secrets.GH_TOKEN}@github.com/ashwinstr/Buildozer_apk.git", data_repository, "--force"]
         )
+        print("!!!!!!!!!!!!!!! WORKED !!!!!!!!!!!!!!!!")
     except subprocess.CalledProcessError:  # There are changes in repository
         # Undo local changes
         subprocess.check_call(
